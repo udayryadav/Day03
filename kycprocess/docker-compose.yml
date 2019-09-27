@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=boaproddb
+      - MYSQL_USER=system1
+      - MYSQL_PASSWORD=root1234
+    volumes:
+      - /data/mysql
+  demo-app:
+    image: repo/kycprocess-compose-app
+    build:
+      context: ./
+      dockerfile: dockerfile
+    depends_on:
+      - mysql
+    ports:
+      - 9888:6060
+    volumes:
+      - /data/compose-app
